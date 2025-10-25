@@ -2,12 +2,13 @@ import express from "express";
 import router from "./routes/notesRote.js";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
-
+import path from "path";
 const app = express();
 import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config();
+const __dirname = path.resolve();
 
 //middleware
 app.use(express.json()); // this middeware will parse the json body
@@ -19,11 +20,24 @@ app.use(express.json()); // this middeware will parse the json body
 //   next();
 // });
 
-app.use(cors({    // middleware is added to make request in same computer
-  origin : "http://localhost:5173"
-}))
+if (process.env.NODE_ENV !== "production") {
+  app.use(
+    cors({
+      // middleware is added to make request in same computer
+      origin: "http://localhost:5173",
+    })
+  );
+}
 
 app.use("/api/notes", router);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 // first connect to DB then start the server
 connectDB().then(() => {

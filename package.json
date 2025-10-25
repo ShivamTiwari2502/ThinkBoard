@@ -1,0 +1,24 @@
+{
+  "name": "mernproj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShivamTiwari2502/ThinkBoard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShivamTiwari2502/ThinkBoard/issues"
+  },
+  "homepage": "https://github.com/ShivamTiwari2502/ThinkBoard#readme",
+  "dependencies": {
+    "build": "^0.1.4"
+  }
+}
